@@ -58,12 +58,11 @@ int main()
         printf("%s is older than %s\n", p2->name, p->name);
 
     person **persons = NULL;
-    int __size_of_persons = 1;
+    int __size_of_persons = 0;
     person *person_tmp = NULL;
 
     __size_of_persons += 1;
-    persons = realloc(persons ,(__size_of_persons + 1) * sizeof(person *));
-	persons[__size_of_persons] = NULL;
+    persons = realloc(persons ,(__size_of_persons) * sizeof(person *));
 	person_tmp = malloc(sizeof(person));
     __init__person_class(person_tmp, "Jawad", 99);
     persons[0] = copy_class_person(person_tmp);
@@ -71,8 +70,7 @@ int main()
     myfunc(persons[0]);
 
     __size_of_persons += 1;
-    persons = realloc(persons ,(__size_of_persons + 1) * sizeof(person *));
-	persons[__size_of_persons] = NULL;
+    persons = realloc(persons ,(__size_of_persons) * sizeof(person *));
 	person_tmp = malloc(sizeof(person));
     __init__person_class(person_tmp, "rida", 55);
     persons[1] = copy_class_person(person_tmp);
@@ -80,8 +78,7 @@ int main()
     myfunc(persons[1]);
 
     __size_of_persons += 1;
-    persons = realloc(persons ,(__size_of_persons + 1) * sizeof(person *));
-	persons[__size_of_persons] = NULL;
+    persons = realloc(persons ,(__size_of_persons) * sizeof(person *));
     persons[2] = copy_class_person(p);
     myfunc(persons[2]);
     
@@ -91,8 +88,7 @@ int main()
         persons[i] = persons[i + 1];
     }
 	__size_of_persons -= 1;
-    persons = realloc(persons ,(__size_of_persons + 1) * sizeof(person *));
-	persons[__size_of_persons] = NULL;
+    persons = realloc(persons ,(__size_of_persons) * sizeof(person *));
     myfunc(persons[1]);
 
 	__call__person_class(persons[0], "Rina", 18);
