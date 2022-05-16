@@ -9,9 +9,11 @@ typedef struct t_person {
 } person;
 
 // __init__ magic method
-void __init__person_class(person *p, char *name, int age) {
+void *__init__person_class(char *name, int age) {
+    person *p = malloc(sizeof(person));
     p->name = name;
     p->age = age;
+    return p;
 }
 
 // __call__ magic method
@@ -36,7 +38,7 @@ void free_array(void **ptr, int size){
 // copy an object and return the new allocated copy
 person *copy_class_person(person *ptr)
 {
-	person *p = malloc(sizeof(person));
+	person *p = (person *)__init__person_class("Ophen", 19);
 	p->name = ptr->name;
 	p->age = ptr->age;
 	return p;
@@ -46,8 +48,7 @@ int main()
 {
 	// p = person("Ophen",19)
     person *p = NULL;
-	p = malloc(sizeof(person));
-    __init__person_class(p, "Ophen", 19);
+	p = (person *)__init__person_class("Ophen", 19);
 
 	// p.myfunc()
     myfunc(p);
@@ -60,8 +61,7 @@ int main()
 
 	// p2 = person("Saad",22)
     person *p2 = NULL;
-	p2 = malloc(sizeof(person));
-    __init__person_class(p2, "Saad", 22);
+	p2 = (person *)__init__person_class("Ophen", 19);
 	
 	// print(f"the combined age of {p.name} and {p2.name} is {p.age + p2.age}")
     printf("the combined age of %s and %s is %d\n", p->name, p2->name, p->age + p2->age);
@@ -82,8 +82,7 @@ int main()
 	// persons.append(person("Jawad",99))
     __size_of_persons += 1;
     persons = realloc(persons ,(__size_of_persons) * sizeof(person *));
-	person_tmp = malloc(sizeof(person));
-    __init__person_class(person_tmp, "Jawad", 99);
+	person_tmp = (person *)__init__person_class("Ophen", 19);
     persons[0] = copy_class_person(person_tmp);
 	free(person_tmp);
 
@@ -93,8 +92,7 @@ int main()
 	// persons.append(person("rida",55))
     __size_of_persons += 1;
     persons = realloc(persons ,(__size_of_persons) * sizeof(person *));
-	person_tmp = malloc(sizeof(person));
-    __init__person_class(person_tmp, "rida", 55);
+	person_tmp = (person *)__init__person_class("Ophen", 19);
     persons[1] = copy_class_person(person_tmp);
 	free(person_tmp);
 
@@ -129,6 +127,6 @@ int main()
 	free_array((void **)persons, __size_of_persons);
     free(p);
     free(p2);
-
+    
 	return (0);
 }
