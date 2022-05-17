@@ -140,8 +140,10 @@ int main()
 	// persons[0].myfunc_person_class();
     persons[0]->myfunc(persons[0]);
 
+    // print(persons[0]) # __str__
     char *person_0__str__ = persons[0]->__str__(persons[0]);
     printf("%s", person_0__str__);
+    
 	// freeing all allocated memory
 	free_array((void **)persons, __size_of_persons);
     free(person_0__str__);
