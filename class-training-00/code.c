@@ -9,6 +9,7 @@ typedef struct t_person {
     void (*myfunc)(struct t_person *self);
     void (*__call__)(struct t_person *self, char *name, int age);
     char *(*__str__)(struct t_person *self);
+	char *__doc__;
 } person;
 
 void set_attributes_person_class(person *p, char *name, int age);
@@ -43,6 +44,7 @@ void set_attributes_person_class(person *p, char *name, int age) {
     p->myfunc = myfunc_person_class;
     p->__call__ = __call__person_class;
     p->__str__ = __str__person_class;
+	p->__doc__ = "this is __doc__ string\n";
 }
 
 // free array of pointers
@@ -143,6 +145,9 @@ int main()
     // print(persons[0]) # __str__
     char *person_0__str__ = persons[0]->__str__(persons[0]);
     printf("%s", person_0__str__);
+
+	// print(persons[0].__doc__)
+	printf("%s", persons[0]->__doc__);
     
 	// freeing all allocated memory
 	free_array((void **)persons, __size_of_persons);

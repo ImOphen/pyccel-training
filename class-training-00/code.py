@@ -1,4 +1,5 @@
 class person:
+	"""this is __doc__ string"""
 	def __init__(self,name,age):
 		self.name = name
 		self.age = age
@@ -41,3 +42,5 @@ persons[0]("Rina", 18);
 persons[0].myfunc();
 
 print(persons[0])
+
+print(persons[0].__doc__)
