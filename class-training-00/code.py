@@ -7,6 +7,8 @@ class person:
 	def __call__(self, name, age):
 		self.name = name
 		self.age = age
+	def __str__(self):
+		return "__str__ : " + self.name + " is " + str(self.age) + " years old"
 
 p = person("Ophen",19)
 p.myfunc()
@@ -37,3 +39,5 @@ persons[1].myfunc();
 
 persons[0]("Rina", 18);
 persons[0].myfunc();
+
+print(persons[0])

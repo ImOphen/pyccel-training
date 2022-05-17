@@ -7,27 +7,42 @@ typedef struct t_person {
     char *name;
     int age;
     void (*myfunc)(struct t_person *self);
+    void (*__call__)(struct t_person *self, char *name, int age);
+    char *(*__str__)(struct t_person *self);
 } person;
+
+void set_attributes_person_class(person *p, char *name, int age);
 
 // method
 void myfunc_person_class(person *p) {
     printf("%s is %d years old\n", p->name, p->age);
 }
 
+
 // __init__ magic method
 void *__init__person_class(char *name, int age) {
     person *p = malloc(sizeof(person));
-    p->name = name;
-    p->age = age;
-    p->myfunc = myfunc_person_class;
+    set_attributes_person_class(p, name, age);
     return p;
 }
 
 // __call__ magic method
 void __call__person_class(person *p, char *name, int age) {
-	p->name = name;
-	p->age = age;
+    set_attributes_person_class(p, name, age);
+}
+
+char *__str__person_class(person *p) {
+    char *str = malloc(sizeof(char) * 100);
+    sprintf(str, "__str__ : %s is %d years old\n", p->name, p->age);
+    return str;
+}
+// void set_attributes
+void set_attributes_person_class(person *p, char *name, int age) {
+    p->name = name;
+    p->age = age;
     p->myfunc = myfunc_person_class;
+    p->__call__ = __call__person_class;
+    p->__str__ = __str__person_class;
 }
 
 // free array of pointers
@@ -42,8 +57,7 @@ void free_array(void **ptr, int size){
 person *copy_class_person(person *ptr)
 {
 	person *p = (person *)__init__person_class(ptr->name, ptr->age);
-	p->name = ptr->name;
-	p->age = ptr->age;
+    set_attributes_person_class(p, ptr->name, ptr->age);
 	return p;
 }
 
@@ -121,11 +135,12 @@ int main()
    persons[1]->myfunc(persons[1]);
 
 	// persons[0]("Rina", 18);
-	__call__person_class(persons[0], "Rina", 18);
+    persons[0]->__call__(persons[0], "Rina", 18);
 
 	// persons[0].myfunc_person_class();
     persons[0]->myfunc(persons[0]);
 
+    printf("%s", persons[0]->__str__(persons[0]));
 	// freeing all allocated memory
 	free_array((void **)persons, __size_of_persons);
     free(p);
